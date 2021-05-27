@@ -93,5 +93,30 @@ print(f"이름: {name1} 나이:{age1}")
 print(분기[0:7])
 #040
 data="  삼성전자  "
-data.strip()
-print(data)
+print(data.strip())
+#041
+ticker = "btc_ktw";ticker=ticker.upper();print(ticker)
+#042
+ticker=ticker.lower();print(ticker)
+#043
+string="hello";string=string.capitalize();print(string)
+#044
+file_name="보고서.xlsx";print(file_name.endswith("xlsx"))
+#045
+print(file_name.endswith("xlsx") or file_name.endswith("xls"))
+#print(file_name.endswith(("xlsx"),("xls"))) 도 가능
+#046
+print(file_name.startswith("보고"))
+#047
+a="hello world";a=a.split(' ');print(a)
+#048
+ticker=ticker.split('_');print(ticker)
+#049
+date="2020-05-01";date=date.split('-')
+print(f"{date[0]}년 {date[1]}월 {date[2]}일")
+#050 rstrip
+data="039490       "; data=data.rstrip();print(data)
+'''
+리스트
+'''
+#051
