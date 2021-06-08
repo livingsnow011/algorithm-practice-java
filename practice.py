@@ -1,8 +1,10 @@
+
+
 '''
 출력문
 '''
-#001
-print("hello world")
+#001 
+numbering(); print("hello world")
 #002
 print("marry's cosmetic")
 #003
@@ -148,4 +150,17 @@ print(len(cook))
 nums=[1,2,3,4,5]
 print(sum(nums)/len(nums))
 #061
-
+price = ['20180728', 100, 130, 140, 150, 160, 170]
+print(price[1:])
+#062
+nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(nums[::2])
+#063
+nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(nums[1::2])
+#064
+nums = [1, 2, 3, 4, 5]
+print(num[::-1])
+#065
+interest = ['삼성전자', 'LG전자', 'Naver']
+print(interest[0],interest[2])
