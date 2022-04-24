@@ -1,4 +1,4 @@
-public class main {
+public class Time {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
 
