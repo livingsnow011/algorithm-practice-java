@@ -1,14 +1,43 @@
+package algorithm.bruteforce;
+
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main{
+// BOJ 15649번 문제
+// 1-B) N개 중 중복을 허용하여, M개를 조건대로 나열
+public class P02_DuplicationPick {
     static StringBuilder sb = new StringBuilder();
+
+    static int N,M;
+    static int[] selected,isUsed;
+
+    static void rec_func(int k){
+        if(k==M+1){
+            for(int i=1;i<=M;++i){sb.append(selected[i]).append(' ');}
+            sb.append('\n');
+        }
+        else{
+            for(int cand=1;cand<=N;++cand){
+                if(isUsed[cand]==1)continue;
+                selected[k]=cand;   isUsed[cand]=1;
+                rec_func(k+1);
+                isUsed[cand]=0;
+            }
+        }
+    }
+
     static void input(){
         FastReader scan = new FastReader();
+        N = scan.nextInt();
+        M = scan.nextInt();
+        selected = new int[M + 1];
+        isUsed = new int[N+1];
     }
 
     public static void main(String[] args) {
         input();
+        rec_func(1);
+        System.out.println(sb.toString());
     }
 
     static class FastReader {

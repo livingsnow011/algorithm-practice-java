@@ -1,14 +1,43 @@
+package algorithm.bruteforce;
+
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main{
+// BOJ 15651번 문제
+// 1-A) N개 중 중복을 허용하여, M개를 나열하는 문제
+public class P01_DuplicationList {
     static StringBuilder sb = new StringBuilder();
+
+    static int N,M;
+    static int[] selected;
+
     static void input(){
         FastReader scan = new FastReader();
+        N = scan.nextInt();
+        M = scan.nextInt();
+        selected = new int[M + 1];
+    }
+
+    // Recurrence Function (재귀 함수)
+    // 만약 M 개를 전부 고름   => 조건에 맞는 탐색을 한 가지 성공한 것!
+    // 아직 M 개를 고르지 않음 => k 번째부터 M번째 원소를 조건에 맞게 고르는 모든 방법을 시도한다.
+    static void rec_func(int k) {
+        if(k==M+1){
+            for(int i=1;i<=M;++i)sb.append(selected[i]).append(' ');
+            sb.append('\n');
+        }else{
+            //진짜 for문
+            for(int cand=1;cand<=N;++cand){
+                selected[k] = cand;
+                rec_func(k+1);
+            }
+        }
     }
 
     public static void main(String[] args) {
         input();
+        rec_func(1);
+        System.out.println(sb.toString());
     }
 
     static class FastReader {
