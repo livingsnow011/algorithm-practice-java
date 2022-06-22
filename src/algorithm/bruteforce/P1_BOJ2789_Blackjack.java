@@ -3,41 +3,58 @@ package algorithm.bruteforce;
 import java.io.*;
 import java.util.StringTokenizer;
 
-// BOJ 15651번 문제
-// 1-A) N개 중 중복을 허용하여, M개를 나열하는 문제
-public class P01_DuplicationList {
+public class P1_BOJ2789_Blackjack {
     static StringBuilder sb = new StringBuilder();
 
-    static int N,M;
-    static int[] selected;
+    static int max = Integer.MIN_VALUE;
 
-    static void input(){
-        FastReader scan = new FastReader();
-        N = scan.nextInt();
-        M = scan.nextInt();
-        selected = new int[M + 1];
-    }
+    // n 카드의 갯수, m 블랙잭 넘버
+    static int n,m;
+    // 카드의 값, 사용여부
+    static int[] cards,selected;
+    //선택된 카드들;
+    static  int[] hand = new int[4];
+    //합
+    static int sum=0;
 
-    // Recurrence Function (재귀 함수)
-    // 만약 M 개를 전부 고름   => 조건에 맞는 탐색을 한 가지 성공한 것!
-    // 아직 M 개를 고르지 않음 => k 번째부터 M번째 원소를 조건에 맞게 고르는 모든 방법을 시도한다.
-    static void rec_func(int k) {
-        if(k==M+1){
-            for(int i=1;i<=M;++i)sb.append(selected[i]).append(' ');
-            sb.append('\n');
-        }else{
-            //진짜 for문
-            for(int cand=1;cand<=N;++cand){
-                selected[k] = cand;
-                rec_func(k+1);
+    // N 개 중 중복을 허용하지 않고, M 개를 고르기
+    // 2-B 유형
+    static void rec_func(int k){
+        if(k==4){
+            for (int i = 1; i < 4; i++) {
+                sum += hand[i];
             }
+            if(sum<=m){
+                max = Math.max(sum, max);
+            }
+            sum = 0;
+        }
+        // 중복을 허용하지 않고, 고르기
+        else{
+            for (int i = selected[k-1]+1; i <= n; i++) {
+                selected[k]=i;  hand[k]=cards[i];
+                rec_func(k+1);
+                selected[k]=0;   hand[k]=0;
+            }
+
         }
     }
 
+
+    static void input(){
+        FastReader scan = new FastReader();
+        n = scan.nextInt();
+        m = scan.nextInt();
+        cards = new int[n+1];
+        for (int i = 1; i <= n; i++) {
+            cards[i] = scan.nextInt();
+        }
+        selected = new int[n+1];
+    }
     public static void main(String[] args) {
         input();
         rec_func(1);
-        System.out.println(sb.toString());
+        System.out.println(max);
     }
 
     static class FastReader {
@@ -67,7 +84,7 @@ public class P01_DuplicationList {
             return Integer.parseInt(next());
         }
 
-        long nextLong() {
+        Long nextLong() {
             return Long.parseLong(next());
         }
 
