@@ -1,31 +1,42 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
-public class Main{
+public class Main {
+    static FastReader scan = new FastReader();
     static StringBuilder sb = new StringBuilder();
-    static int n;
-    static int arr[];
 
+    static int n,m;
+    static int[] arr,used;
+    static ArrayList<Integer> sequence = new ArrayList<>();
 
+    //N개 중에서 중복을 허용하여, 순서대로 나열하는 문제
+    static void rec(int k){
+        if(k==m+1){
+        }
+        else{
+            for (int i = 1; i <=n ; i++) {
+//                used[k]=i;
+//                rec(k+1);
+//                used[k]=0;
+            }
+        }
+    }
 
-    static void input(){
-        FastReader scan = new FastReader();
-        n = scan.nextInt();
-        arr = new int[n];
-        for (int i = 0; i < n; i++) {
-            arr[i]=scan.nextInt();
+    static void input() {
+        n= scan.nextInt();
+        m= scan.nextInt();
+        arr = new int[n+1];
+        used = new int[n + 1];
+        for (int i = 1; i < n+1; i++) {
+            arr[i]= scan.nextInt();
         }
     }
 
     public static void main(String[] args) {
         input();
-
-        Arrays.sort(arr);
-        for (int i = 0; i < n; i++) {
-            System.out.println(arr[i]);
-        }
+        rec(1);
     }
+
 
     static class FastReader {
         BufferedReader br;
@@ -54,7 +65,7 @@ public class Main{
             return Integer.parseInt(next());
         }
 
-        Long nextLong() {
+        long nextLong() {
             return Long.parseLong(next());
         }
 
