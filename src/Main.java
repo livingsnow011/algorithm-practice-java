@@ -5,36 +5,28 @@ public class Main {
     static FastReader scan = new FastReader();
     static StringBuilder sb = new StringBuilder();
 
-    static int n,m;
-    static int[] arr,used;
-    static ArrayList<Integer> sequence = new ArrayList<>();
-
-    //N개 중에서 중복을 허용하여, 순서대로 나열하는 문제
-    static void rec(int k){
-        if(k==m+1){
-        }
-        else{
-            for (int i = 1; i <=n ; i++) {
-//                used[k]=i;
-//                rec(k+1);
-//                used[k]=0;
-            }
-        }
-    }
+    static int A,B,C;
+    static int a,b,c;
+    static boolean[][][] visit;
 
     static void input() {
-        n= scan.nextInt();
-        m= scan.nextInt();
-        arr = new int[n+1];
-        used = new int[n + 1];
-        for (int i = 1; i < n+1; i++) {
-            arr[i]= scan.nextInt();
-        }
+        A=scan.nextInt();
+        B=scan.nextInt();
+        C=scan.nextInt();
+        c = C;
+        a=0;    b=0;
+
+        visit = new boolean[A+1][B+1][C+1];
+    }
+
+    static void solution(){
+        
     }
 
     public static void main(String[] args) {
         input();
-        rec(1);
+        solution();
+
     }
 
 
