@@ -5,108 +5,66 @@ public class Main {
     static FastReader scan = new FastReader();
     static StringBuilder sb = new StringBuilder();
 
-    static int n;
-    static int m;
-    static int[][] map;
-    static int selected[];
-    static int[][] selectedPoint;
-    static int zeroCnt = 0;
-    static int[][] dir = {{-1,0}, {1,0}, {0,-1}, {0,1}};
-    static boolean[][] visit;
+    static int n, m;
+    static ArrayList<Integer>[] graph;
+    static boolean[] isUsed;
+    static int[] indegree;
 
-    static int[][] newMap;
-    static int max = Integer.MIN_VALUE;
+    static ArrayList<Integer> list = new ArrayList<>();
 
-    static void input(){
-        n= scan.nextInt();
+    public static void input(){
+        n = scan.nextInt();
         m = scan.nextInt();
-        map = new int[n + 1][m + 1];
 
-        for (int i = 1; i <=n ; i++) {
-            for (int j = 1; j <=m ; j++) {
-                map[i][j] = scan.nextInt();
-                if(map[i][j]==0)
-                    zeroCnt++;
-            }
+        graph = new ArrayList[n + 1];
+        indegree = new int[n + 1];
+        isUsed = new boolean[n + 1];
+        for (int i = 1; i < n+1; i++) {
+            graph[i] = new ArrayList<>();
         }
 
-        selected = new int[zeroCnt + 1];
-        selectedPoint = new int[zeroCnt + 1][2];
-
-        int idx =1;
-        for (int i = 1; i <=n ; i++) {
-            for (int j = 1; j <=m ; j++) {
-                if(map[i][j]==0){
-                   selectedPoint[idx][0]=i;
-                   selectedPoint[idx][1]=j;
-                   idx++;
-                }
-            }
+        for (int i = 0; i < m; i++) {
+            int a = scan.nextInt();
+            int b = scan.nextInt();
+            graph[a].add(b);
+            indegree[b]++;
         }
     }
 
-    // 0인 점 n개 중에서 3개를 선택
-    static void rec(int k){
-        //0인 구역에 울타리 3개를 설치했을 경우
-        if(k==4){
-            visit = new boolean[n + 1][m + 1];
-            newMap = new int[n + 1][m + 1];
+    public static void sol(){
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 1; i <n+1 ; i++) {
+            if(indegree[i]==0){
+                isUsed[i] = true;
+                queue.add(i);
+            }
+        }
+
+        while(!queue.isEmpty()){
+            int x = queue.poll();
+            list.add(x);
+            for (int i = 0; i < graph[x].size(); i++) {
+                indegree[graph[x].get(i)]--;
+            }
 
             for (int i = 1; i <n+1 ; i++) {
-                for (int j = 1; j <m+1 ; j++) {
-                    newMap[i][j] = map[i][j];
+                if(indegree[i]==0&&!isUsed[i]){
+                    isUsed[i] = true;
+                    queue.add(i);
                 }
             }
 
-            for (int i = 1; i <n+1 ; i++) {
-                for (int j = 1; j <m+1 ; j++) {
-                    if(!visit[i][j]&&newMap[i][j]==2)
-                        dfs(i,j);
-                }
-            }
-            int cnt=0;
-            for (int i = 1; i <n+1 ; i++) {
-                for (int j = 1; j <m+1 ; j++) {
-                    if(newMap[i][j]==0)
-                        cnt++;
-                }
-            }
-                max = Math.max(cnt, max);
         }
-        else{
-            for (int i = selected[k-1]+1; i <=zeroCnt ; i++) {
-                selected[k]=i;
-                map[selectedPoint[selected[k]][0]][selectedPoint[selected[k]][1]]=1;
-                rec(k+1);
-                map[selectedPoint[selected[k]][0]][selectedPoint[selected[k]][1]]=0;
-                selected[k]=0;
-            }
-        }
-    }
 
-    static void dfs(int row, int col){
-        visit[row][col] = true;
-        if(newMap[row][col]==0)
-            newMap[row][col]=2;
-
-        for (int i = 0; i < dir.length ; i++) {
-            int newRow = row + dir[i][0];
-            int newCol = col + dir[i][1];
-
-            if(newRow<1||newCol<1||newRow>n||newCol>m)continue;
-            if(!visit[newRow][newCol]&&newMap[newRow][newCol]!=1){
-                dfs(newRow,newCol);
-            }
-        }
 
     }
 
     public static void main(String[] args) {
         input();
-        rec(1);
-
-        System.out.println(max);
+        sol();
+        System.out.println(list);
     }
+
 
     static class FastReader {
         BufferedReader br;
